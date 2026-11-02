@@ -1,0 +1,22 @@
+[Unit]
+Description=SunlineBF Field Test and shared history
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+StateDirectory=sunlinebf
+WorkingDirectory=/opt/sunlinebf
+Environment=SUNLINEBF_HOST=0.0.0.0
+Environment=SUNLINEBF_PORT=8081
+Environment=SUNLINEBF_DB=/var/lib/sunlinebf/results.sqlite3
+ExecStart=/usr/bin/python3 /opt/sunlinebf/server.py
+Restart=on-failure
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

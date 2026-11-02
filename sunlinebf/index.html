@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1730">
+  <meta name="description" content="Test de debit réseau SunlineBF pour techniciens terrain">
+  <title>SunlineBF | Test réseau</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="speedtest.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="SunlineBF, accueil"><span class="brand-mark">S</span><span>Sunline<span class="brand-light">BF</span></span></a>
+      <span class="badge"><i class="status-dot" id="connectionDot"></i><span id="connectionLabel">Connexion au serveur…</span></span>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">OUTIL TECHNICIEN · PTMP</p>
+      <h1>Test de débit</h1>
+      <p class="intro">Mesurez la connexion du site directement vers le serveur SunlineBF.</p>
+    </section>
+
+    <section class="details card" aria-labelledby="detailsTitle">
+      <div class="section-heading"><div><p class="eyebrow">RAPPORT DE TERRAIN</p><h2 id="detailsTitle">Informations du test</h2></div><span class="optional">Facultatif</span></div>
+      <div class="fields">
+        <label>Technicien <input id="technician" maxlength="60" autocomplete="name" placeholder="Votre nom"></label>
+        <label>Site / client <input id="site" maxlength="80" autocomplete="organization" placeholder="Nom du site"></label>
+      </div>
+      <p class="privacy">Les résultats terminés seront enregistrés sur le serveur pour consultation par l’équipe.</p>
+    </section>
+
+    <section class="test card" aria-labelledby="testTitle">
+      <div class="section-heading test-heading"><div><p class="eyebrow">MESURE EN DIRECT</p><h2 id="testTitle">Résultat</h2></div><span id="phase" class="phase" aria-live="polite">Préparation du test</span></div>
+      <div class="metrics" aria-live="polite" aria-atomic="true">
+        <article class="metric metric-download"><span class="metric-icon" aria-hidden="true">↓</span><span class="metric-name">Téléchargement</span><strong id="download">—</strong><span class="unit">Mbit/s</span></article>
+        <article class="metric metric-upload"><span class="metric-icon" aria-hidden="true">↑</span><span class="metric-name">Envoi</span><strong id="upload">—</strong><span class="unit">Mbit/s</span></article>
+        <article class="metric metric-latency"><span class="metric-icon" aria-hidden="true">◷</span><span class="metric-name">Latence</span><strong id="ping">—</strong><span class="unit">ms</span></article>
+        <article class="metric metric-jitter"><span class="metric-icon" aria-hidden="true">≈</span><span class="metric-name">Gigue</span><strong id="jitter">—</strong><span class="unit">ms</span></article>
+      </div>
+      <div class="progress-track" aria-hidden="true"><div id="progress" class="progress-fill"></div></div>
+      <p class="test-note" id="testNote">Laissez les appareils utiliser le réseau normalement pendant la mesure.</p>
+      <button id="startButton" class="start-button" type="button" disabled><span aria-hidden="true">▶</span> <span id="buttonLabel">Connexion au serveur…</span></button>
+      <div id="report" class="report" hidden>
+        <div><span class="report-label">Appareil testé</span><strong id="clientIp">—</strong></div>
+        <button id="copyButton" class="copy-button" type="button">Copier le rapport</button>
+      </div>
+      <p id="error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section class="history card" aria-labelledby="historyTitle">
+      <div class="section-heading"><div><p class="eyebrow">SUIVI TERRAIN</p><h2 id="historyTitle">Historique des tests</h2></div><button id="refreshHistory" class="copy-button" type="button">Actualiser</button></div>
+      <label class="history-search">Rechercher un technicien ou un site<input id="historySearch" type="search" maxlength="100" placeholder="Nom du technicien ou du site"></label>
+      <p id="historyStatus" class="history-status" role="status" aria-live="polite">Chargement de l’historique…</p>
+      <div class="history-table-wrap"><table class="history-table"><thead><tr><th>Date</th><th>Technicien</th><th>Site</th><th>Téléchargement</th><th>Envoi</th><th>Latence</th><th>Gigue</th></tr></thead><tbody id="historyRows"></tbody></table></div>
+      <div class="history-pagination"><button id="previousPage" class="copy-button" type="button" disabled>Précédent</button><span id="pageLabel" aria-live="polite">Page 1</span><button id="nextPage" class="copy-button" type="button" disabled>Suivant</button></div>
+      <button id="retrySaveButton" class="retry-button" type="button" hidden>Réessayer l’enregistrement du dernier test</button>
+    </section>
+
+    <footer><span>SunlineBF · Réseau PTMP</span><span>Mesure propulsée par LibreSpeed</span></footer>
+  </main>
+</body>
+</html>
