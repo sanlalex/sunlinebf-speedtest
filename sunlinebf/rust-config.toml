@@ -1,0 +1,23 @@
+bind_address="0.0.0.0"
+listen_port=8080
+worker_threads=1
+base_url="backend"
+ipinfo_api_key=""
+# Use embedded Rust assets. The upstream file server has had path traversal
+# vulnerabilities in past versions; this app only needs the API endpoints.
+assets_path=""
+stats_password=""
+redact_ip_addresses=true
+result_image_theme="light"
+# The SunlineBF history service stores only the measurement and technician/site
+# fields entered by the operator. Disable LibreSpeed telemetry to avoid a
+# second database containing client IP addresses and browser details.
+database_type="none"
+database_hostname="localhost"
+database_name="speedtest_db"
+database_username=""
+database_password=""
+database_file="/data/speedtest.db"
+enable_tls=false
+tls_cert_file=""
+tls_key_file=""

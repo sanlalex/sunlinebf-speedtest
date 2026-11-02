@@ -1,0 +1,14 @@
+data/
+__pycache__/
+*.py[cod]
+tests/
+*.sqlite3*
+*.tar
+*.tar.gz
+.git/
+.gitignore
+README.md
+MIKROTIK.md
+sunlinebf.service
+Dockerfile
+.dockerignore
