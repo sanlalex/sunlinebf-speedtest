@@ -11,17 +11,22 @@ Depuis ce dossier (`sunlinebf/`), construire et exporter :
 ```sh
 docker buildx build --platform linux/amd64 --load -t sunlinebf:chr .
 docker save sunlinebf:chr -o ../sunlinebf-chr-amd64.tar
+python export_routeros.py ../sunlinebf-chr-amd64.tar ../sunlinebf-chr-routeros.tar
 ```
 
-Le fichier créé est `work/librespeed-sunlinebf/sunlinebf-chr-amd64.tar`. Dans Winbox, téléverser cette archive dans un stockage persistant du CHR, par exemple un disque ajouté et monté comme `disk1`. Créer aussi un dossier persistant pour `/data`, par exemple `disk1/sunlinebf-data`, puis importer l’image :
+Téléverser **`sunlinebf-chr-routeros.tar`**, produit par la dernière commande. Le script Python standard transforme l’export Docker récent (configuration dans `blobs/sha256`) en archive Docker classique (configuration à la racine et couches `layer.tar` non compressées), en vérifiant chaque couche avec les empreintes de l’image. Cela contourne l’erreur RouterOS `no config found in manifest`. Le contenu et la configuration de l’image sont conservés ; l’archive classique est plus volumineuse.
+
+Dans Winbox, téléverser cette archive dans un stockage persistant du CHR, par exemple un disque ajouté et monté comme `disk1`. Créer aussi un dossier persistant pour `/data`, par exemple `disk1/sunlinebf-data`, puis importer l’image :
 
 ```routeros
 /container/config/set tmpdir=disk1/tmp
 /container/mounts/add list=mount-sunlinebf src=disk1/sunlinebf-data dst=/data
-/container/add file=disk1/sunlinebf-chr-amd64.tar name=sunlinebf root-dir=disk1/sunlinebf-root interface=veth-sunlinebf mountlists=mount-sunlinebf start-on-boot=yes
+/container/add file=disk1/sunlinebf-chr-routeros.tar name=sunlinebf root-dir=disk1/sunlinebf-root interface=veth-sunlinebf mountlists=mount-sunlinebf start-on-boot=yes
 ```
 
-Ces commandes supposent que les noms `disk1` et `veth-sunlinebf` existent déjà. Adapter le chemin `disk1/sunlinebf-chr-amd64.tar` au dossier où l’archive a été téléversée. Créer le montage persistant avant le conteneur.
+Ces commandes supposent que les noms `disk1` et `veth-sunlinebf` existent déjà. Adapter le chemin `disk1/sunlinebf-chr-routeros.tar` au dossier où l’archive a été téléversée : `/file/print detail where name~"sunlinebf"` permet de retrouver le nom exact. Créer le montage persistant avant le conteneur.
+
+Si une première tentative est en échec, supprimer uniquement l’entrée du conteneur échoué dans Winbox, conserver le montage et le dossier de données, puis importer la nouvelle archive. Choisir un nouveau `root-dir` vide, par exemple `disk1/sunlinebf-root-v2`, si une extraction partielle existe. Ne pas ajouter une seconde fois le montage déjà créé.
 
 Avant le premier démarrage, vérifier `/container/print` puis lancer :
 
